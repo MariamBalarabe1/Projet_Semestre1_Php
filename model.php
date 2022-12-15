@@ -1,13 +1,40 @@
 <?php
+    require_once("data.php");
+    
     function find_adherent_by_id(int $id):array|null 
     {
-        $adherents=[
-            ["id"=>1,"nom"=>"Balarabe","prenom"=>"Mariam"],
-            ["id"=>2,"nom"=>"Balarabe","prenom"=>"Amina"],
-            ["id"=>3,"nom"=>"Abdoul","prenom"=>"A.Rachid"],
-            ["id"=>4,"nom"=>"A.Rahim","prenom"=>"Mohamed"]
-        ];
+        $adherents=find_all_adherents();
         foreach($adherents as $key =>$val){
+            if($val["id"]==$id){
+                return $val;
+            }
+        }
+        return null;
+    }
+    function find_demande_by_id(int $id):array|null 
+    {
+        foreach(find_all_demandes() as $key =>$val){
+            if($val["id"]==$id){
+                return $val;
+            }
+        }
+        return null;
+    }
+
+    function find_rayons_by_id(int $id):array|null 
+    {
+        $rayons=find_all_rayons();
+        foreach($rayons as $key =>$val){
+            if($val["id"]==$id){
+                return $val;
+            }
+        }
+        return null;
+    }
+    function find_auteurs_by_id(int $id):array|null 
+    {
+        $auteurs=find_all_auteurs();
+        foreach($auteurs as $key =>$val){
             if($val["id"]==$id){
                 return $val;
             }
@@ -16,13 +43,7 @@
     }
     function find_ex_by_id(int $id):array|null 
     {
-        $exemplaires=[
-            ["id"=>1,"code"=>uniqid(),"date_enregistrement"=>2021,"ouvrages_id"=>4],
-            ["id"=>2,"code"=>uniqid(),"date_enregistrement"=>2019,"ouvrages_id"=>2],
-            ["id"=>3,"code"=>uniqid(),"date_enregistrement"=>2022,"ouvrages_id"=>3],
-            ["id"=>4,"code"=>uniqid(),"date_enregistrement"=>2021,"ouvrages_id"=>1],
-            ["id"=>5,"code"=>uniqid(),"date_enregistrement"=>2020,"ouvrages_id"=>1]
-        ];
+        $exemplaires=find_all_exemplaires();
         foreach($exemplaires as $key =>$val){
             if($val["id"]==$id){
                 return $val;
@@ -34,23 +55,15 @@
 
     function find_demandes():array
     {
-        $demandes=[
-        ["id"=>1,"date"=>"12/04/2022","adherents_id"=>3],
-        ["id"=>2,"date"=>"14/04/2022","adherents_id"=>1],
-        ["id"=>3,"date"=>"12/07/2022","adherents_id"=>4]
-        ];
-        $adherents=[
-            ["id"=>1,"nom"=>"Balarabe","prenom"=>"Mariam"],
-            ["id"=>2,"nom"=>"Balarabe","prenom"=>"Amina"],
-            ["id"=>3,"nom"=>"Abdoul","prenom"=>"A.Rachid"],
-            ["id"=>4,"nom"=>"A.Rahim","prenom"=>"Mohamed"]
-        ];
+        $demandes=find_all_demandes();
+        $adherents=find_all_adherents();
         $dem=[];
         foreach($demandes as $key =>$val){
             $adh=find_adherent_by_id($val["adherents_id"]);
             $dem[]=[
                 "id"=>$val["id"],
                 "date"=>$val["date"],
+                "adherent_id"=>$adh["id"],
                 "adherent"=>$adh["nom"]." ".$adh["prenom"]
             ];
         }
@@ -69,13 +82,10 @@
 
 function find_pret():array
 {
-    $prets=[
-        ["id"=>1,"date"=>"02/08/2022","date_retour_prevu"=>"10/08/2022","date_retour_reel"=>"09/08/2022","adherents_id"=>1,"exemplaires_id"=>1],
-        ["id"=>2,"date"=>"20/08/2022","date_retour_prevu"=>"27/08/2022","date_retour_reel"=>"30/08/2022","adherents_id"=>4,"exemplaires_id"=>3]
-    ];
+    $prets=find_all_prets();
     $pret=[];
     foreach($prets as $val){
-        $adhe=find_adherent_by_id($val["adherents_id"]);
+        $adhe=find_adherent_by_id($val["adherent_id"]);
         $ex=find_ex_by_id($val["exemplaires_id"]);
         $pret[]=[
             "id"=>$val["id"],
@@ -83,9 +93,51 @@ function find_pret():array
             "date_retour_prevu"=>$val["date_retour_prevu"],
             "date_retour_reel"=>$val["date_retour_reel"],
             "adherent"=>$adhe["nom"]." ".$adhe["prenom"],
-            "exemplaires"=>$ex["id"]
+            "exemplaires"=>$ex["id"],
+            "etat"=>$val["etat"]
         ];
     }
     return $pret;
+
 }
-?>
+function find_spret(int $id):array{
+    $pret=[];
+    foreach(find_all_prets() as $val){
+        if($id==$val["adherent_id"]){
+            $pret[]=$val;
+        }
+    }
+    return $pret;
+}
+
+function spret(int $id,string $etat):array{
+    $pret=[];
+    foreach(find_spret($id) as $val){
+        if($val["etat"]==$etat){
+            $pret[]=$val;
+        }
+    }
+    return $pret;
+}
+
+function find_dem_adh(int $id):array|null
+{
+    $sd=[];
+    foreach(find_all_demandes() as $val){
+        if($val["adherents_id"]==$id){
+            $sd[]=$val;
+        }
+    }
+    return $sd;
+}
+
+function find_user_by_l_p(string $log,string $psw):array|null
+{
+    $users=find_all_users();
+    foreach($users as $val){
+        if($val["login"]==$log && $val["password"]==$psw){
+            return $val;
+        }
+    }
+    return null;
+}
