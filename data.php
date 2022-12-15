@@ -14,6 +14,9 @@ function find_all_rayons():array
     return[
         ["id"=>1,"nom"=>"fiction_histoire"],
         ["id"=>2,"nom"=>"litterature"],
+        ["id"=>2,"nom"=>"litterature"],
+        ["id"=>2,"nom"=>"litterature"],
+        ["id"=>2,"nom"=>"litterature"],
         ["id"=>3,"nom"=>"mathémathiques"]
     ];
 }
