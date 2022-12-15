@@ -1,5 +1,5 @@
 <div class="menu_princ">
-    <h3>FORMULAIRE DE CONNEXION</h3>
+    <h3>CONNEXION</h3>
     <div class="menu">
         <form action="index.php" method="POST">
             <table>
