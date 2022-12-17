@@ -51,34 +51,62 @@
         }
         return null;
     }
-    
-
-    function find_demandes():array
-    {
-        $demandes=find_all_demandes();
-        $adherents=find_all_adherents();
-        $dem=[];
-        foreach($demandes as $key =>$val){
-            $adh=find_adherent_by_id($val["adherents_id"]);
-            $dem[]=[
-                "id"=>$val["id"],
-                "date"=>$val["date"],
-                "adherent_id"=>$adh["id"],
-                "adherent"=>$adh["nom"]." ".$adh["prenom"]
-            ];
-        }
-        return $dem;
-    }
-
-    function find_dispo(string $etat ):array|null
-    {
-        foreach($ouvrages as $key =>$val){
+    function find_ex_by_et(string $etat):array{
+        $exdisp=[];
+        foreach(find_all_exemplaires() as $key => $val){
             if($val["etat"]==$etat){
-                return $val;
+                $exdisp[]=$val;
             }
         }
-        return null;
+        return $exdisp;
     }
+    function find_pret_by_et(string $etat):array{
+        $prett=[];
+        foreach(find_all_prets() as $key => $val){
+            if($val["etat"]==$etat){
+                $prett[]=$val;
+            }
+        }
+        return $prett;
+    }
+function find_pret_by_adh(string $adher):array{
+    $pretts=[];
+    foreach(find_all_prets() as $key => $val){
+        $x=find_adherent_by_id($val["adherent_id"]);
+        if(($x["prenom"]." ".$x["nom"])==$adher){
+            $pretts[]=$val;
+        }
+    }
+    return $pretts;
+}
+
+function find_demandes():array
+{
+    $demandes=find_all_demandes();
+    $adherents=find_all_adherents();
+    $dem=[];
+    foreach($demandes as $key =>$val){
+        $adh=find_adherent_by_id($val["adherents_id"]);
+        $dem[]=[
+            "id"=>$val["id"],
+            "date"=>$val["date"],
+            "adherent_id"=>$adh["id"],
+            "adherent"=>$adh["nom"]." ".$adh["prenom"]
+        ];
+    }
+    return $dem;
+}
+
+function find_dispo(string $etat):array
+{
+    $dispo=[];
+    foreach(find_all_ouvrages() as $key =>$val){
+        if($val["etat"]==$etat){
+            $dispo[]=$val;
+        }
+    }
+    return $dispo;
+}
 
 function find_pret():array
 {

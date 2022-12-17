@@ -14,7 +14,7 @@
         <?php foreach($prets as $val)  :?>
             <?php $date=date('d-m-y'); ?>
             <?php $adh=find_adherent_by_id($val["adherent_id"])?>
-            <?php if (strtotime("$date") < strtotime($val["date_retour_prevu"])): ?>
+            <?php if (!(strtotime($date) > strtotime($val["date_retour_prevu"])) and $val["etat"]=="Encours"): ?>
                 <tr>
                     <td>
                         <?=$val["id"] ?>

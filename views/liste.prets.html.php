@@ -1,7 +1,41 @@
-<?php $pret=find_pret() ?>
+
     <div class="container">
-       
         <h3>LISTE DES PRETS</h3>
+        <br>
+        <div class="form2">
+            <form action="index.php" method="POST">
+                <div class="form3">
+                    <label for="">ETAT</label>
+                    <select name="etat" id="">
+                        <option value="Encours">Encours</option>
+                        <option value="Retourné">Retourné</option>
+                    </select>
+                </div>
+                <div class="form3">
+                    <input type="submit" name="btn" value="SAUVEGARDER">
+                </div>
+            </form>
+        </div>
+        <br>
+        <br>
+        <div class="form2">
+            <form action="index.php" method="POST">
+                <div class="form3">
+                    <label for="">ADHERENTS</label>
+                    <select name="adherent" id="">
+                        <option value="Mariam BALARABE">Mariam BALARABE</option>
+                        <option value="Amina ABDOUL.R">Amina ABDOUL.R</option>
+                        <option value="A.Rachid ABDOUL">A.Rachid ABDOUL</option>
+                        <option value="Mohamed A.RAHIM">Mohamed A.RAHIM</option>
+                    </select>
+                </div>
+                <div class="form3">
+                    <input type="submit" name="btn" value="ENREGISTRER">
+                </div>
+            </form>
+        </div>
+        <br>
+        <br>
         <table>
             <tr>
                 <th>ID</th>
@@ -12,7 +46,8 @@
                 <th>EXEMPLAIRE ID</th>
                 <th>ETAT</th>
             </tr>
-            <?php foreach($pret as $val):?>
+            <?php foreach($prets as $val):?>
+                <?php $adh=find_adherent_by_id($val["adherent_id"])?>
                 <tr>
                     <td>
                         <?php echo($val["id"]) ?>
@@ -27,10 +62,10 @@
                         <?php echo($val["date_retour_reel"]) ?>
                     </td>
                     <td>
-                        <?php echo($val["adherent"]) ?>
+                        <?= $adh["prenom"]." ".$adh["nom"] ?>
                     </td>
                     <td>
-                        <?php echo($val["exemplaires"]) ?>
+                        <?php echo($val["exemplaires_id"]) ?>
                     </td>
                     <td>
                         <?php echo($val["etat"]) ?>

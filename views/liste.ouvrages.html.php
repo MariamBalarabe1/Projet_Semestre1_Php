@@ -1,6 +1,27 @@
-<?php $ouvrages=find_all_ouvrages() ?>
+
     <div class="container">
         <h3>LISTE DES OUVRAGES</h3>
+        <br>
+        <div>
+            <div class="form2">
+                <form  action="index.php" method="POST">
+                    <div class="form3">
+                        <label for="">ETAT</label>
+                        <select name="etat" id="">
+                            <option value="Disponible">Disponible</option>
+                            <option value="Indisponible">Indisponible</option>
+                        </select>
+                    </div>
+                    <div class="form3">
+                        <input type="submit" name="btn" value="OK">
+                    </div>
+                   
+                </form>
+            </div>
+            
+        </div>
+        <br>
+        <br>
         <table>
             <tr>
                 <th>ID</th>

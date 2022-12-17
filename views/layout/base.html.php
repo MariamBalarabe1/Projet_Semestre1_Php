@@ -17,14 +17,14 @@
                 <li><a href="index.php?x=10&mode=all">PRETS</a></li>
             <?php endif?>
             <?php if($_SESSION["user_connect"]["role"]=="RP"):?>
-                <li><a href="index.php?x=6">PRETS</a></li>
+                <li><a href="index.php?x=6&mode=all&y=z">PRETS</a></li>
+                <li><a href="index.php?x=7">ADHERENTS RETARDATAIRES</a></li>
             <?php endif?>
             <?php if($_SESSION["user_connect"]["role"]=="RB"):?>
-                <li><a href="index.php?x=1">OUVRAGES</a></li>
-                <li><a href="index.php?x=7">OUVRAGES DISPONIBLES</a></li>
+                <li><a href="index.php?x=1&mode=all">OUVRAGES</a></li>
                 <li><a href="index.php?x=2">AUTEURS</a></li>
                 <li><a href="index.php?x=3">RAYONS</a></li>
-                <li><a href="index.php?x=4">EXEMPLAIRES INDISPONIBLES</a></li>
+                <li><a href="index.php?x=4&mode=all">EXEMPLAIRES</a></li>
                 <li><a href="index.php?x=5">DEMANDES</a></li>
             <?php endif?>
             <li><a href="index.php?x=8">SE DECONNECTER</a></li>

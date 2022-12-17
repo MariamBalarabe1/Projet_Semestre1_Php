@@ -7,8 +7,8 @@
         }
         switch($_GET["x"]){
             case '1':
-
-                $data=find_all_ouvrages();
+                $ouvrages=lister_ouvrages($_GET);
+                $data["ouvrages"]=$ouvrages;
                 load_view("liste.ouvrages",$data);
                 // require_once("views/liste.ouvrages.html.php");
             break;
@@ -23,7 +23,8 @@
                 // require_once("views/liste.rayons.html.php");
             break;
             case '4':
-                $data=find_all_exemplaires();
+                $exemplaires=lister_exemp($_GET);
+                $data["exemplaires"]=$exemplaires;
                 load_view("liste.ex.indis",$data);
                 // require_once("views/liste.ex.indis.html.php");
             break;
@@ -32,14 +33,10 @@
                 load_view("liste.dem",$data);
             break;
             case '6':
-                $data=find_all_prets();
+                $prets=lister_prets($_GET);
+                $data["prets"]=$prets;
                 load_view("liste.prets",$data);
                 // require_once("views/liste.prets.html.php");
-            break;
-            case '7':
-                $data=find_all_ouvrages();
-                load_view("liste.oeuvres.dispo",$data);
-                // require_once("views/liste.oeuvres.dispo.html.php");
             break;
             case '0':
                 load_view("acceuil");
@@ -53,13 +50,13 @@
                 load_view("liste.sdem",$data);
             break;
             case '10':
-                // var_dump($_GET);
-                // $_SESSION["etat"]=$_REQUEST["etat"];
-                // var_dump($_SESSION["etat"]);
-                // $_GET["ett"]=$_SESSION["etat"];
                 $pret=lister_spret($_GET);
                 $data["pret"]=$pret;
                 load_view("liste.spret",$data);
+            break;
+            case '7':
+                $data=find_all_prets();
+                load_view("liste.prets.ret",$data);
             break;
         }
     }else {
@@ -78,6 +75,18 @@
             case 'ENVOYER':
                 // $etat=$_SESSION["etat"];
                 header("location:index.php?x=10&mode=filtre&et=$etat");
+            break;
+            case 'OK':
+                header("location:index.php?x=1&mode=filtre&et=$etat");
+            break;
+            case 'VALIDER':
+                header("location:index.php?x=4&mode=filtre&et=$etat");
+            break;
+            case 'SAUVEGARDER':
+                header("location:index.php?x=6&mode=filtre&y=a&et=$etat");
+            break;
+            case 'ENREGISTRER':
+                header("location:index.php?x=6&mode=filtre&y=b&adh=$adherent");
             break;
         }
     }
@@ -102,6 +111,58 @@ function lister_spret(array $request):array{
         $spret=spret($_SESSION["user_connect"]["id_adh"],$request["et"]);
     }
     return $spret;
+}
+
+function lister_ouvrages(array $request):array{
+    if($request["mode"]=="all"){
+        $ouvrages=find_all_ouvrages();
+    }elseif($request["mode"]=="filtre"){
+        if($request["et"]=="Disponible"){
+            $ouvrages=find_dispo($request["et"]);
+        }else{
+            $ouvrages=find_dispo($request["et"]);
+        }
+    }
+    return $ouvrages;
+}
+
+function lister_exemp(array $request):array{
+    if($request["mode"]=="all"){
+        $exemplaires=find_all_exemplaires();
+    }elseif($request["mode"]=="filtre"){
+        if($request["et"]=="Enpret"){
+            $exemplaires=find_ex_by_et($request["et"]);
+        }else{
+            $exemplaires=find_ex_by_et($request["et"]);
+        }
+    }
+    return $exemplaires;
+}
+
+function lister_prets(array $request):array{
+    if($request["y"]=="z"){
+        if($request["mode"]=="all"){
+            $prets=find_all_prets();
+        }
+    }elseif($request["y"]=="a"){
+        if($request["mode"]=="filtre"){
+            if($request["et"]=="Encours"){
+                $prets=find_pret_by_et($request["et"]);
+            }else{
+                $prets=find_pret_by_et($request["et"]);
+            }
+        }
+    }else{
+        if($request["mode"]=="filtre"){
+            if($request["adh"]=="Mariam BALARABE"){
+                $prets=find_pret_by_adh($request["adh"]);
+            }else{
+                $prets=find_pret_by_adh($request["adh"]);
+            }
+        }
+        
+    }
+    return $prets;
 }
 
 // fonctions technique du controller 

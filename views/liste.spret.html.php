@@ -5,7 +5,7 @@
         <br>
         <div>
             <div class="form2">
-                <form action="index.php" method="POST">
+                <form  action="index.php" method="POST">
                     <div class="form3">
                         <label for="">ETAT</label>
                         <select name="etat" id="">
@@ -21,7 +21,6 @@
             </div>
             
         </div>
-        
         <br>
         <br>
         <table>
