@@ -1,6 +1,6 @@
 <div class="text">
     <h1>E221</h1>
-    <h4>GESTION DE LA BIBLIOTHEQUE</h4>
+    <h4>GESTION DE LA BIBLIOTHEQUE </h4>
 </div>
 <div class="menu_princ">
     
@@ -29,9 +29,9 @@
                     </tr>
                 </div>
                 <div class="form">
-                    <tr>
-                        <td class="cntt" colspan="2">
-                            <input class="c" type="submit" name="btn" value="CONNEXION">
+                    <tr class="cttt">
+                        <td class="cnttt" colspan="2">
+                            <button class="c" name="btn" value="CONNEXION">CONNEXION</button>
                         </td>
                     </tr>
                     

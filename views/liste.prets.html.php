@@ -23,10 +23,10 @@
                 <div class="form3">
                     <label for="">ADHERENTS</label>
                     <select name="adherent" id="">
-                        <option value="Mariam BALARABE">Mariam BALARABE</option>
-                        <option value="Amina ABDOUL.R">Amina ABDOUL.R</option>
-                        <option value="A.Rachid ABDOUL">A.Rachid ABDOUL</option>
-                        <option value="Mohamed A.RAHIM">Mohamed A.RAHIM</option>
+                        <?php foreach(find_all_adherents() as $val):?>
+                            <?php $x=$val["prenom"]." ".$val["nom"]?>
+                            <option value=<?=$x?>><?=$x?></option>
+                        <?php endforeach?>
                     </select>
                 </div>
                 <div class="form3">
